@@ -4,12 +4,25 @@ import type { Invoice } from "@invoice/types";
 export default function App() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/invoices")
-      .then((res) => res.json())
-      .then((data) => setInvoices(data))
-      .catch((err) => console.error("Failed to fetch invoices:", err))
+      .then((res) => {
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+        return res.json();
+      })
+      .then((data: unknown) => {
+        if (Array.isArray(data)) {
+          setInvoices(data as Invoice[]);
+        } else {
+          setError("Unexpected response from server.");
+        }
+      })
+      .catch((err: unknown) => {
+        console.error("Failed to fetch invoices:", err);
+        setError(err instanceof Error ? err.message : "Failed to load invoices.");
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -22,6 +35,8 @@ export default function App() {
       <main className="max-w-5xl mx-auto px-6 py-8">
         {loading ? (
           <p className="text-gray-500">Loading invoices...</p>
+        ) : error ? (
+          <p className="text-red-600">Error: {error}</p>
         ) : invoices.length === 0 ? (
           <p className="text-gray-500">No invoices found.</p>
         ) : (
