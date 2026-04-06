@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.turbo/
+.env
+.env.local
+*.log
+
+# Prisma
+packages/database/node_modules/.prisma/
+
+# Vite
+apps/frontend/dist/
+
+# OS
+.DS_Store
+Thumbs.db
