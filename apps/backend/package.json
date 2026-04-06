@@ -13,12 +13,14 @@
     "@invoice/database": "workspace:*",
     "@invoice/types": "workspace:*",
     "express": "^5.0.0",
+    "multer": "^1.4.5-lts.1",
     "node-cron": "^3.0.3",
     "zod": "^3.24.0"
   },
   "devDependencies": {
     "@invoice/config": "workspace:*",
     "@types/express": "^5.0.0",
+    "@types/multer": "^1.4.12",
     "@types/node": "^22.10.0",
     "@types/node-cron": "^3.0.11",
     "tsx": "^4.19.0",

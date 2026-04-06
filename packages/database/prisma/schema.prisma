@@ -9,11 +9,13 @@ datasource db {
 
 enum InvoiceStatus {
   PENDING
-  PAID
+  SETTLED
+  REJECTED
 }
 
 model Invoice {
   id            String        @id @default(cuid())
+  customerName  String        @map("customer_name")
   customerEmail String        @map("customer_email")
   amount        Decimal       @db.Decimal(12, 2)
   status        InvoiceStatus @default(PENDING)

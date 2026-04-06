@@ -1,10 +1,12 @@
 export enum InvoiceStatus {
   PENDING = "PENDING",
-  PAID = "PAID",
+  SETTLED = "SETTLED",
+  REJECTED = "REJECTED",
 }
 
 export interface Invoice {
   id: string;
+  customerName: string;
   customerEmail: string;
   amount: number;
   status: InvoiceStatus;
@@ -13,6 +15,7 @@ export interface Invoice {
 }
 
 export interface CreateInvoiceDTO {
+  customerName: string;
   customerEmail: string;
   amount: number;
 }

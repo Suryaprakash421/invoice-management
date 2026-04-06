@@ -48,7 +48,13 @@ webhookRouter.post("/turf-receipts", async (req, res) => {
 
     await prisma.invoice.update({
       where: { id: invoice_id },
-      data: { status: status === "PAID" ? "PAID" : "PENDING" },
+      data: {
+        status: (["PENDING", "SETTLED", "REJECTED"] as const).includes(
+          status as "PENDING" | "SETTLED" | "REJECTED",
+        )
+          ? (status as "PENDING" | "SETTLED" | "REJECTED")
+          : "PENDING",
+      },
     });
 
     const response: WebhookResponse = {
